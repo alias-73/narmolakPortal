@@ -19,8 +19,7 @@ class MyApp extends StatefulWidget {
     primarySwatch: Colors.green,),
   home: 
 // jjknk
-///asd asdas
-///alias
-
+//asd adassda asd asd asd
+///asd 
   Directionality( textDirection: TextDirection.rtl, child: login_page()),
   );}}
