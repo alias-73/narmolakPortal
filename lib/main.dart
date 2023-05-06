@@ -29,6 +29,7 @@ class sampleState extends State<MyApp> {
         primarySwatch: Colors.green,
       ),
       home:
+      // text1
           Directionality(textDirection: TextDirection.rtl, child: login_page()),
     );
   }
