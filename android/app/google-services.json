@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "394373101830",
+    "project_id": "sima-agent",
+    "storage_bucket": "sima-agent.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394373101830:android:5020cbf14df2de7be58687",
+        "android_client_info": {
+          "package_name": "com.alias.sima_portal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394373101830-cm692id599qd5bm6um2p7lt22e2cfhii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAha1f--9gA09i_SJlVDpCkLjY87yqlURU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394373101830-cm692id599qd5bm6um2p7lt22e2cfhii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
