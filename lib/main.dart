@@ -15,8 +15,10 @@ class MyApp extends StatefulWidget {
   return MaterialApp(      
   navigatorObservers: [FlutterSmartDialog.observer],
   builder: FlutterSmartDialog.init(),debugShowCheckedModeBanner: false, theme: ThemeData(fontFamily: 'Sans', primaryColor: Colors.white, hintColor: Colors.black,
-   accentColor: Colors.red, primarySwatch: Colors.green,),
+   accentColor: Colors.red,
+    primarySwatch: Colors.green,),
   home: 
-  
+// jjknk
+
   Directionality( textDirection: TextDirection.rtl, child: login_page()),
   );}}
