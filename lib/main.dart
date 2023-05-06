@@ -32,5 +32,6 @@ class sampleState extends State<MyApp> {
       // text1
           Directionality(textDirection: TextDirection.rtl, child: login_page()),
     );
+    // txt2
   }
 }
