@@ -29,10 +29,7 @@ class sampleState extends State<MyApp> {
         primarySwatch: Colors.green,
       ),
       home:
-// jjknk
-//asd adassda asd asd asd2
-
-///
+      //// new 
           Directionality(textDirection: TextDirection.rtl, child: login_page()),
     );
   }
