@@ -14,9 +14,10 @@
     <!--        android:label="نوین آوا شمال"       -->
     <!--    مدیریت کلید بازگشت-->
     <application
-        android:label="سامانه جامع نرمولک"
+        android:label="پرتال جامع سیماخوان"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"

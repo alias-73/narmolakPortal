@@ -37,15 +37,16 @@ class login_page extends StatefulWidget {
   State<StatefulWidget> createState() => sampleState();
 }
 
-class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
+class sampleState extends State<login_page>
+    with SingleTickerProviderStateMixin {
   final _key1 = GlobalKey<FormFieldState>();
   final _key2 = GlobalKey<FormFieldState>();
   int i = 0;
 
   final int delayedAmount = 1000;
   late double _scale;
-  late  AnimationController _controller;
-  int version = 25 ;
+  late AnimationController _controller;
+  int version = 26;
   int UpVersion = 0;
   bool? _hasBioSensor;
 
@@ -61,11 +62,10 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
   bool isAuth = false;
   late bool AllowLogin = false;
   bool? isBio = false;
-  TextEditingController? controller1 = TextEditingController(text: "demo");
-  TextEditingController? controller2 = TextEditingController(text: "demo");
+  TextEditingController? controller1 = TextEditingController(text: "");
+  TextEditingController? controller2 = TextEditingController(text: "");
 
   void notify() async {
-
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     var messaging = FirebaseMessaging.instance;
@@ -79,8 +79,7 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
 
   setRememberPrefs(bool state) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("remember",state);
-
+    await prefs.setBool("remember", state);
   }
 
   // lastVersionChanges() async {
@@ -103,33 +102,42 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
   // }
 
   checkEnablePortal() async {
-      en_message = await (OnlineServices()).checkEnablePortal();
+    en_message = await (OnlineServices()).checkEnablePortal();
 
-      // en_message="akslad";
-      en_message.contains("yes") ?
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: errorPage(en_message))))
-          : en_message.contains("no") ? null :
-      Comp.showSnack(context,Icons.warning_amber_rounded,"لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
-
+    // en_message="akslad";
+    en_message.contains("yes")
+        ? Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: errorPage(en_message))))
+        : en_message.contains("no")
+            ? null
+            : Comp.showSnack(context, Icons.warning_amber_rounded,
+                "لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
   }
-
 
   void getRememberPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.getBool("remember").toString().contains("null") ? null : remember = prefs.getBool("remember")!;
+    await prefs.getBool("remember").toString().contains("null")
+        ? null
+        : remember = prefs.getBool("remember")!;
     setState(() {});
-
   }
 
   setPrefs(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String pass = _key2.currentState!.value.toString();
-    await prefs.setString("info", name  + "," + _key1.currentState!.value.toString()  + "," + pass);
+    await prefs.setString(
+        "info", name + "," + _key1.currentState!.value.toString() + "," + pass);
   }
 
   void getBioPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.getBool("isBio").toString().contains("null") ? null : isBio = prefs.getBool("isBio");
+    await prefs.getBool("isBio").toString().contains("null")
+        ? null
+        : isBio = prefs.getBool("isBio");
     setState(() {});
   }
 
@@ -139,16 +147,19 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
     // prefs.remove("isBio");
     i == 0 ? prefs.remove("info") : null;
     setState(() {});
-    await prefs.getString("info").toString().contains("null") ? null : info = prefs.getString("info").toString();
+    await prefs.getString("info").toString().contains("null")
+        ? null
+        : info = prefs.getString("info").toString();
     setState(() {});
-    if(info == "null" || info == "0")
-    {
+    if (info == "null" || info == "0") {
       info = "0";
-    }
-    else
-    {
-      remember == true ? controller1 = TextEditingController(text: info.split(",")[1]) : null;
-      remember == true ? controller2 = TextEditingController(text: info.split(",")[2]) : null;
+    } else {
+      remember == true
+          ? controller1 = TextEditingController(text: info.split(",")[1])
+          : null;
+      remember == true
+          ? controller2 = TextEditingController(text: info.split(",")[2])
+          : null;
 
       isAuth = true;
       setState(() {});
@@ -168,16 +179,16 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
   //   privacy = await (OnlineServices()).getPrivacyPolicy();
   // }
 
-
-  final GlobalKey<AnimatorWidgetState> basicAnimation1 = GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> basicAnimation2 = GlobalKey<AnimatorWidgetState>();
+  final GlobalKey<AnimatorWidgetState> basicAnimation1 =
+      GlobalKey<AnimatorWidgetState>();
+  final GlobalKey<AnimatorWidgetState> basicAnimation2 =
+      GlobalKey<AnimatorWidgetState>();
 
   @override
   dispose() {
     // print("____________________________");
     super.dispose();
   }
-
 
   @override
   void initState() {
@@ -189,29 +200,31 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
     checkNewVersion();
     checkEnablePortal();
 
-      // lastVersionChanges();
+    // lastVersionChanges();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
       lowerBound: 0.0,
       upperBound: 0.1,
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     //  Future.delayed(const Duration(milliseconds: 1000), () {basicAnimation2.currentState?.forward();});
     loadingd();
     super.initState();
   }
 
-  void loadingd(){
-    Future.delayed(const Duration(milliseconds: 1500), () {basicAnimation2.currentState?.forward(); loadingd();});}
+  void loadingd() {
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      basicAnimation2.currentState?.forward();
+      loadingd();
+    });
+  }
 
   String text = "Stop Service";
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     double r = 20;
     double l = 20;
     double t = 10;
@@ -224,80 +237,124 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
     _scale = 1 - _controller.value;
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body:
-
-        SafeArea(
-          child:  Stack(
+        body: SafeArea(
+          child: Stack(
             alignment: Alignment.topCenter,
             children: [
-
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: size.height * .03,),
-                  Image.asset("assets/images/appbar_logo.png",width: 150 ),
-                  DelayedAnimation(
-                    child: Text("گروه نرم افزاری نرمولک", style: TextStyle(fontWeight: FontWeight.w800, color: Color(0xff0f703a), fontSize: 20)),
-                    delay: delayedAmount + 1400,
+                  SizedBox(
+                    height: size.height * .08,
                   ),
-
+                  Image.asset("assets/images/appbar_logo.png", width: 150),
+                  SizedBox(
+                    height: size.height * .03,
+                  ),
+                  // DelayedAnimation(
+                  //   child: Text("گروه نرم افزاری نرمولک",
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.w800,
+                  //           color: Color(0xff0f703a),
+                  //           fontSize: 20)),
+                  //   delay: delayedAmount + 1400,
+                  // ),
                   DelayedAnimation(
                     child: txtBox(
-                        false, "نام کاربری", Icons.person, _key1 , controller1! ),
+                        false, "نام کاربری", Icons.person, _key1, controller1!),
                     delay: delayedAmount + 1400,
                   ),
-                  SizedBox(height: 0.06,),
+                  SizedBox(
+                    height: 0.06,
+                  ),
                   DelayedAnimation(
-                    child: txtBox(true, "رمز عبور", Icons.lock, _key2 , controller2!),
+                    child: txtBox(
+                        true, "رمز عبور", Icons.lock, _key2, controller2!),
                     delay: delayedAmount + 1600,
                   ),
-                  SizedBox(height: 0.04,),
+                  SizedBox(
+                    height: 0.04,
+                  ),
+                  SizedBox(
+                    height: size.height * .02,
+                  ),
                   DelayedAnimation(
                     delay: delayedAmount + 1800,
-                    child:  Column(
+                    child: Column(
                       children: [
-                        Container(width: size.width * .7, child: Padding(
-                          padding: EdgeInsets.only(left: 0, right: 0, top: 15),
-                          child: ElevatedButton(child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(Icons.add_box_outlined,color: Color(0x00000000),),
-                              Text("ورود", style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500),),
-                              Icon(Icons.arrow_forward,color: Colors.black,)
-                            ],
+                        Container(
+                            width: size.width * .7,
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.only(left: 0, right: 0, top: 15),
+                              child: ElevatedButton(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Icon(
+                                        Icons.add_box_outlined,
+                                        color: Color(0x00000000),
+                                      ),
+                                      Text(
+                                        "ورود",
+                                        style: TextStyle(
+                                            color: Color(0xff000000),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.black,
+                                      )
+                                    ],
+                                  ),
+                                  style: ButtonStyle(
+                                      elevation: MaterialStateProperty.all(20),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Color(0xffdadada))),
+                                  onLongPress: () {
+                                    //  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: test())));
+                                  },
+                                  onPressed: () {
+                                    if (_key1.currentState!.value
+                                                .toString()
+                                                .length >
+                                            1 &&
+                                        _key2.currentState!.value
+                                                .toString()
+                                                .length >
+                                            2) {
+                                      //   print(_key1.currentState!.value.toString().trim());
+                                      sendDataForLogin();
+                                    } else
+                                      Comp.showSnack(
+                                          context,
+                                          Icons.warning_amber_rounded,
+                                          "لطفا نام کاربری یا رمز عبور را وارد نمایید");
+                                  }),
+                            )),
+                        SizedBox(
+                          height: size.height * .02,
+                        ),
+
+                        SizedBox(
+                          width: size.width * .6,
+                          child: CheckboxListTile(
+                            title: Text("مرا بخاطر داشته باش"),
+                            activeColor: Colors.black,
+                            onChanged: (bool? value) {
+                              setRememberPrefs(value!);
+                              remember = value;
+                              setState(() {});
+                            },
+                            value: remember,
                           ),
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(20),
-                                  backgroundColor: MaterialStateProperty.all(Color(
-                                      0xffdadada))),
-                              onLongPress: (){
-                              //  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: test())));
-
-                              },
-                              onPressed: () {
-                                if (_key1.currentState!.value
-                                    .toString()
-                                    .length > 1 && _key2.currentState!.value
-                                    .toString()
-                                    .length > 2) {
-                                  //   print(_key1.currentState!.value.toString().trim());
-                                  sendDataForLogin();
-                                }
-                                else
-                                  Comp.showSnack(
-                                      context, Icons.warning_amber_rounded,
-                                      "لطفا نام کاربری یا رمز عبور را وارد نمایید");
-                              }
-                          ),
-                        )),
-                        SizedBox(height: size.height * .02,),
-
-                        SizedBox(width: size.width * .6, child: CheckboxListTile(title: Text("مرا بخاطر داشته باش"),activeColor: Colors.black, onChanged: (bool? value) { setRememberPrefs(value!); remember = value; setState(() {} );}, value: remember,),),
-                        SizedBox(height: size.height * .02,),
-
+                        ),
+                        SizedBox(
+                          height: size.height * .02,
+                        ),
 
                         // Row(mainAxisAlignment: MainAxisAlignment.center,children: [
                         //   SizedBox(width: size.width * .46),
@@ -308,50 +365,51 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
                       ],
                     ),
                   ),
-
-                  SizedBox(height: size.height * .09,),
-                  SizedBox(height: size.height * 0.12,child: RollIn(key: basicAnimation1,child: Container(
-                      width: size.width,
-                      child:
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-
-                              avatar_item("sadad2"),
-                              avatar_item("irankish"),
-                              avatar_item("pasargad"),
-                              avatar_item("behpardakht"),
-                              avatar_item("sepehr"),
-                              avatar_item("novin"),
-
-                            ],
-                          ),
-
-                        ],
-                      )
-
-                  )),),
-
-                  SizedBox(height: size.height * .12,),
-
-
+                  SizedBox(
+                    height: size.height * .04,
+                  ),
+                  Expanded(
+                    child: RollIn(
+                        key: basicAnimation1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                avatar_item("sadad"),
+                                avatar_item("irankish"),
+                                avatar_item("pasargad"),
+                                avatar_item("behpardakht"),
+                                avatar_item("sepehr"),
+                                avatar_item("novin"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: size.height * .03,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                    "محصول شرکت\nتوسعه فناوری اطلاعات ابر آینا",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontSize: 25)),
+                                Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text("نسخه 2.1.6  ")),
+                              ],
+                            )
+                          ],
+                        )),
+                  ),
                 ],
               ),
-
-
-              Align(child: Padding(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(" "),
-                    Text("نسخه 2.0.5"),
-
-                  ]),padding: EdgeInsets.only(left: 10,right: 10,bottom: 7),), alignment: Alignment.bottomLeft,),
             ],
           ),
-        )
-    );
+        ));
   }
 
   // void _showLastChanges(String message) {
@@ -410,7 +468,7 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
   //   );
   // }
 
-  Widget avatar_item(String logo){
+  Widget avatar_item(String logo) {
     double endR = 20;
     double radius = 30;
     return AvatarGlow(
@@ -426,12 +484,15 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
           child: CircleAvatar(
             backgroundColor: Colors.grey[100],
             radius: radius,
-            child: Padding(padding: EdgeInsets.all(2),child: Image.asset("assets/images/${logo}.png"),),
+            child: Padding(
+              padding: EdgeInsets.all(2),
+              child: Image.asset("assets/images/${logo}.png"),
+            ),
           )),
     );
   }
 
-  Widget avatar_item2(String logo){
+  Widget avatar_item2(String logo) {
     double endR = 60;
     double radius = 40;
     return AvatarGlow(
@@ -447,7 +508,10 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
           child: CircleAvatar(
             backgroundColor: Colors.white,
             radius: radius,
-            child: Padding(padding: EdgeInsets.all(11),child: Image.asset("assets/images/${logo}.png"),),
+            child: Padding(
+              padding: EdgeInsets.all(11),
+              child: Image.asset("assets/images/${logo}.png"),
+            ),
           )),
     );
   }
@@ -472,7 +536,6 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-
                   Directionality(
                       textDirection: TextDirection.rtl,
                       child: Column(
@@ -491,7 +554,9 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
             ),
             actions: <Widget>[
               ElevatedButton(
-                  onPressed: () {Navigator.pop(context);},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "     مطالعه کردم      ",
                     style: TextStyle(
@@ -506,7 +571,8 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
     );
   }
 
-  Widget txtBox(bool sec,String label, IconData ic, Key key , TextEditingController controller ) {
+  Widget txtBox(bool sec, String label, IconData ic, Key key,
+      TextEditingController controller) {
     var size = MediaQuery.of(context).size;
     Color cl = Color(0xff565656);
     return Container(
@@ -519,27 +585,33 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
         cursorColor: cl,
         textAlign: TextAlign.left,
         key: key,
-        style: TextStyle(color: cl, fontWeight: key == _key1 ? FontWeight.w600 : FontWeight.w400),
+        style: TextStyle(
+            color: cl,
+            fontWeight: key == _key1 ? FontWeight.w600 : FontWeight.w400),
         //   initialValue: 'Input text',
         decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
           ),
-          suffixIcon:  IconButton(
+          suffixIcon: IconButton(
             icon: Icon(
               // Based on passwordVisible state choose the icon
-              !sec ? Icons.height : _passwordVisible
-                  ? Icons.visibility
-                  : Icons.visibility_off,
-              color: sec == true ? Color(0xff3d3d3d) : Color(0x00000000) ,
+              !sec
+                  ? Icons.height
+                  : _passwordVisible
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+              color: sec == true ? Color(0xff3d3d3d) : Color(0x00000000),
             ),
             onPressed: () {
               // Update the state i.e. toogle the state of passwordVisible variable
-              sec ? setState(() {
-                _passwordVisible =
-                !_passwordVisible;
-              }) : Null;
-            },) ,
+              sec
+                  ? setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    })
+                  : Null;
+            },
+          ),
           prefixIcon: Icon(
             ic,
             color: cl,
@@ -561,14 +633,12 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
           labelText: label,
 
           //  border: OutlineInputBorder(borderSide: BorderSide(color: cl)),
-
         ),
       ),
     );
   }
 
   Future checkNewVersion() async {
-
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
@@ -584,33 +654,33 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
       if (UpVersion > version) {
         expireDialog();
       }
-    }
-    else
-      Comp.showSnack(context,Icons.warning_amber_rounded,"لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
-
+    } else
+      Comp.showSnack(context, Icons.warning_amber_rounded,
+          "لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
   }
 
-  void expireDialog(){
+  void expireDialog() {
     CoolAlert.show(
       context: context,
       confirmBtnText: "   خروج  ",
       type: CoolAlertType.warning,
       title: "خطای نسخه نرم افزار",
-      onConfirmBtnTap: (){
+      onConfirmBtnTap: () {
         Navigator.pop(context);
         SystemNavigator.pop();
-        },
+      },
       text: "لطفا نسخه جدید را از مدیر برنامه دریافت نمایید",
       backgroundColor: Colors.white,
     );
   }
-  void expireDialog1(){
+
+  void expireDialog1() {
     CoolAlert.show(
       context: context,
       confirmBtnText: "   دانلود نسخه جدید  ",
       type: CoolAlertType.warning,
       title: "خطای نسخه نرم افزار",
-      onConfirmBtnTap: (){
+      onConfirmBtnTap: () {
         Navigator.pop(context);
         _launchUrl("https://cafebazaar.ir/app/com.alias.sima_portal");
       },
@@ -619,21 +689,23 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
     );
   }
 
-///14.400  1.10.000003322-2
+  ///14.400  1.10.000003322-2
   ///55      12311-4
   Future<void> _launchUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
       throw 'Could not launch ';
     }
   }
-  void sendDataForLogin() async {
 
+  void sendDataForLogin() async {
     String Qresponse;
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi &&
-        (en_message.contains("yes")  || en_message.contains("no")) ) {
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi &&
+            (en_message.contains("yes") || en_message.contains("no"))) {
       if (UpVersion > version) {
-        expireDialog();      } else {
+        expireDialog();
+      } else {
         Map response;
         response = await (OnlineServices()).sendDataForLogin({
           "username": _key1.currentState!.value.toString(),
@@ -643,29 +715,38 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
         if (response['data'] != "free") {
           _data.clear();
           _data.addAll(response['data']);
-          Qresponse = await OnlineServices.checkQuestionare({ "agentcode": _data.last.agentCode, "usercode": _data.last.userCode});
+          Qresponse = await OnlineServices.checkQuestionare({
+            "agentcode": _data.last.agentCode,
+            "usercode": _data.last.userCode
+          });
 
           sendToken(userToken, _data.last.agentCode, _data.last.userCode);
           setPrefs(_data.last.name);
-          Qresponse == "yes" ?
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: appbar_home(_data))))
-              :
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: introPage(_data))));
-
-
+          Qresponse == "yes"
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: appbar_home(_data))))
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: introPage(_data))));
         } else {
-          Comp.showSnack(context,Icons.warning_amber_rounded,"نام کاربری یا رمز عبور اشتباه است");
-
+          Comp.showSnack(context, Icons.warning_amber_rounded,
+              "نام کاربری یا رمز عبور اشتباه است");
         }
       }
-    } else
-      {Comp.showSnack(context,Icons.wifi_off,"لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
+    } else {
+      Comp.showSnack(context, Icons.wifi_off,
+          "لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
       checkEnablePortal();
       checkNewVersion();
-      }
-
+    }
   }
-
 
   void sendDataForLogin3() async {
     String Qresponse;
@@ -683,37 +764,52 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
           "password": info.split(",")[2],
         });
 
-        if(response['data'] == "free"){
+        if (response['data'] == "free") {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.remove("info");
-
         }
 
         if (response != null) {
           _data.clear();
           _data.addAll(response['data']);
-          Qresponse = await OnlineServices.checkQuestionare({ "agentcode": _data.last.agentCode, "usercode": _data.last.userCode});
+          Qresponse = await OnlineServices.checkQuestionare({
+            "agentcode": _data.last.agentCode,
+            "usercode": _data.last.userCode
+          });
 
           sendToken(userToken, _data.last.agentCode, _data.last.userCode);
           setPrefs(_data.last.name);
-          Qresponse == "yes" ?
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: appbar_home(_data))))
-              :
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: introPage(_data))));
-
+          Qresponse == "yes"
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: appbar_home(_data))))
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: introPage(_data))));
         } else {
-          Comp.showSnack(context,Icons.warning_amber_rounded,"نام کاربری یا رمز عبور اشتباه است");
-
+          Comp.showSnack(context, Icons.warning_amber_rounded,
+              "نام کاربری یا رمز عبور اشتباه است");
         }
       }
     } else
-      Comp.showSnack(context,Icons.wifi_off,"لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
-
+      Comp.showSnack(context, Icons.wifi_off,
+          "لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
   }
 
   void sendToken(String token, String agentCode, String userCode) async {
-    String response;    response = await (OnlineServices()).sendToken(
-        {"token": userToken, "agentcode": agentCode, "usercode": userCode , "version":version.toString()});
+    String response;
+    response = await (OnlineServices()).sendToken({
+      "token": userToken,
+      "agentcode": agentCode,
+      "usercode": userCode,
+      "version": version.toString()
+    });
   }
 
   void sendDataForLogin2() async {
@@ -730,35 +826,43 @@ class sampleState extends State<login_page> with SingleTickerProviderStateMixin{
           "password": info.split(",")[2],
         });
         // print("______________2222222222___________________");
-        if(response['data'] == "free"){
+        if (response['data'] == "free") {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.remove("info");
-
         }
 
         if (response != null) {
           _data.clear();
           _data.addAll(response['data']);
-          Qresponse = await OnlineServices.checkQuestionare({ "agentcode": _data.last.agentCode, "usercode": _data.last.userCode});
+          Qresponse = await OnlineServices.checkQuestionare({
+            "agentcode": _data.last.agentCode,
+            "usercode": _data.last.userCode
+          });
 
           sendToken(userToken, _data.last.agentCode, _data.last.userCode);
           setPrefs(_data.last.name);
-          Qresponse == "yes" ?
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: appbar_home(_data))))
-              :
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: introPage(_data))));
-
+          Qresponse == "yes"
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: appbar_home(_data))))
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: introPage(_data))));
         } else {
-          Comp.showSnack(context,Icons.warning_amber_rounded,"نام کاربری یا رمز عبور اشتباه است");
-
+          Comp.showSnack(context, Icons.warning_amber_rounded,
+              "نام کاربری یا رمز عبور اشتباه است");
         }
       }
     } else
-      Comp.showSnack(context,Icons.wifi_off,"لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
-
+      Comp.showSnack(context, Icons.wifi_off,
+          "لطفا از اتصال دستگاه خود به اینترنت اطمینان حاصل نمایید");
   }
-
-
 }
 /*
  DelayedAnimation(

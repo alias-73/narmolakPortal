@@ -7,42 +7,47 @@ import 'package:sima_portal/a_sima_app/models/chart1Model.dart';
 import '../services/online_services.dart';
 
 class _LineChart extends StatelessWidget {
-  double h ;
-  double w ;
+  double h;
+  double w;
   List<Chart1Model> _data1 = [];
   List<Chart1Model> _data2 = [];
 
-  _LineChart(this._data1 , this._data2,this.h, this.w);
+  _LineChart(this._data1, this._data2, this.h, this.w);
   double bigger = 0;
   double smaller = 10000;
-
 
   @override
   Widget build(BuildContext context) {
     checkBiger();
     return LineChart(
-       sampleData1 ,
+      sampleData1,
       swapAnimationDuration: const Duration(milliseconds: 250),
     );
   }
 
-  void checkBiger(){
-
-    for (int i = 0 ; i<_data1.length ; i++){
-      double.parse(_data1[i].count) > bigger ? bigger = double.parse(_data1[i].count) : null;
+  void checkBiger() {
+    for (int i = 0; i < _data1.length; i++) {
+      double.parse(_data1[i].count) > bigger
+          ? bigger = double.parse(_data1[i].count)
+          : null;
     }
-    for (int i = 0 ; i<_data2.length ; i++){
-      double.parse(_data2[i].count) > bigger ? bigger = double.parse(_data2[i].count) : null;
-    }
-
-    for (int i = 0 ; i<_data1.length ; i++){
-      double.parse(_data1[i].count) < smaller ? smaller = double.parse(_data1[i].count) : null;
-    }
-    for (int i = 0 ; i<_data2.length ; i++){
-      double.parse(_data2[i].count) < smaller ? smaller = double.parse(_data2[i].count) : null;
+    for (int i = 0; i < _data2.length; i++) {
+      double.parse(_data2[i].count) > bigger
+          ? bigger = double.parse(_data2[i].count)
+          : null;
     }
 
+    for (int i = 0; i < _data1.length; i++) {
+      double.parse(_data1[i].count) < smaller
+          ? smaller = double.parse(_data1[i].count)
+          : null;
     }
+    for (int i = 0; i < _data2.length; i++) {
+      double.parse(_data2[i].count) < smaller
+          ? smaller = double.parse(_data2[i].count)
+          : null;
+    }
+  }
 
   LineChartData get sampleData1 => LineChartData(
         lineTouchData: lineTouchData1,
@@ -59,7 +64,6 @@ class _LineChart extends StatelessWidget {
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
-
           tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
         ),
       );
@@ -124,6 +128,8 @@ class _LineChart extends StatelessWidget {
       );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    print("__________________________________");
+    // print(_data1[0]);
     const style = TextStyle(
       color: Color(0xff72719b),
       fontWeight: FontWeight.w400,
@@ -135,22 +141,22 @@ class _LineChart extends StatelessWidget {
         text = Text(_data1[0].date.toString().split("/")[2], style: style);
 
         break;
-        case 1:
+      case 1:
         text = Text(_data1[1].date.toString().split("/")[2], style: style);
         break;
-        case 2:
+      case 2:
         text = Text(_data1[2].date.toString().split("/")[2], style: style);
         break;
       case 3:
-        text =  Text(_data1[3].date.toString().split("/")[2], style: style);
+        text = Text(_data1[3].date.toString().split("/")[2], style: style);
         break;
       case 4:
         text = Text(_data1[4].date.toString().split("/")[2], style: style);
         break;
-        case 5:
+      case 5:
         text = Text(_data1[5].date.toString().split("/")[2], style: style);
         break;
-        case 6:
+      case 6:
         text = Text(_data1[6].date.toString().split("/")[2], style: style);
         break;
       default:
@@ -167,7 +173,6 @@ class _LineChart extends StatelessWidget {
 
   SideTitles get bottomTitles => SideTitles(
         showTitles: true,
-
         reservedSize: 40,
         interval: 1,
         getTitlesWidget: bottomTitleWidgets,
@@ -190,17 +195,16 @@ class _LineChart extends StatelessWidget {
         color: const Color(0xffc40a21),
         barWidth: 3,
         isStrokeCapRound: false,
-
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
         spots: [
-          FlSpot(0, double.parse(_data1[0].count)),
-          FlSpot(1, double.parse(_data1[1].count)),
-          FlSpot(2, double.parse(_data1[2].count)),
-          FlSpot(3, double.parse(_data1[3].count)),
-          FlSpot(4, double.parse(_data1[4].count)),
-          FlSpot(5, double.parse(_data1[5].count)),
-          FlSpot(6, double.parse(_data1[6].count)),
+          FlSpot(0, _data1.length > 0 ? double.parse(_data1[0].count) : 0.0),
+          FlSpot(1, _data1.length > 0 ? double.parse(_data1[1].count) : 0.0),
+          FlSpot(2, _data1.length > 0 ? double.parse(_data1[2].count) : 0.0),
+          FlSpot(3, _data1.length > 0 ? double.parse(_data1[3].count) : 0.0),
+          FlSpot(4, _data1.length > 0 ? double.parse(_data1[4].count) : 0.0),
+          FlSpot(5, _data1.length > 0 ? double.parse(_data1[5].count) : 0.0),
+          FlSpot(6, _data1.length > 0 ? double.parse(_data1[6].count) : 0.0),
         ],
       );
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
@@ -208,20 +212,18 @@ class _LineChart extends StatelessWidget {
         color: const Color(0xffffbe00),
         barWidth: 3,
         isStrokeCapRound: false,
-
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
         spots: [
-          FlSpot(0, double.parse(_data2[0].count)),
-          FlSpot(1, double.parse(_data2[1].count)),
-          FlSpot(2, double.parse(_data2[2].count)),
-          FlSpot(3, double.parse(_data2[3].count)),
-          FlSpot(4, double.parse(_data2[4].count)),
-          FlSpot(5, double.parse(_data2[5].count)),
-          FlSpot(6, double.parse(_data2[6].count)),
+          FlSpot(0, _data2.length > 0 ? double.parse(_data2[0].count) : 0.0),
+          FlSpot(1, _data2.length > 0 ? double.parse(_data2[1].count) : 0.0),
+          FlSpot(2, _data2.length > 0 ? double.parse(_data2[2].count) : 0.0),
+          FlSpot(3, _data2.length > 0 ? double.parse(_data2[3].count) : 0.0),
+          FlSpot(4, _data2.length > 0 ? double.parse(_data2[4].count) : 0.0),
+          FlSpot(5, _data2.length > 0 ? double.parse(_data2[5].count) : 0.0),
+          FlSpot(6, _data2.length > 0 ? double.parse(_data2[6].count) : 0.0),
         ],
       );
-
 }
 
 class LineChartSample1 extends StatefulWidget {
@@ -238,7 +240,6 @@ class LineChartSample1State extends State<LineChartSample1> {
   late Map response1;
   late Map response2;
 
-
   @override
   void initState() {
     getChartData1();
@@ -246,32 +247,31 @@ class LineChartSample1State extends State<LineChartSample1> {
     Future.delayed(const Duration(milliseconds: 3000), () {
       isShowChart = true;
       setState(() {});
-
     });
     super.initState();
   }
 
   void getChartData1() async {
-    widget._Agent.last.agentCode == "10004" ?
-    response1 = await OnlineServices.getChart1({ "agentcode": "10070", "usercode": widget._Agent.last.userCode} ) :
-    response1 = await OnlineServices.getChart1({ "agentcode": widget._Agent.last.agentCode, "usercode": widget._Agent.last.userCode} );
+    response1 = await OnlineServices.getChart1({
+      "agentcode": widget._Agent.last.agentCode,
+      "usercode": widget._Agent.last.userCode
+    });
 
-    widget._Agent.last.agentCode == "10004" ?
-    response2 = await OnlineServices.getChart2({ "agentcode": "10070", "usercode": widget._Agent.last.userCode} ) :
-    response2 = await OnlineServices.getChart2({ "agentcode": widget._Agent.last.agentCode, "usercode": widget._Agent.last.userCode} );
+    response2 = await OnlineServices.getChart2({
+      "agentcode": widget._Agent.last.agentCode,
+      "usercode": widget._Agent.last.userCode
+    });
     //  print(response);
-      if (response1["data"] != "free") {
-        _data1.clear();
-        _data1.addAll(response1['data']);
-      }
+    if (response1["data"] != "free") {
+      _data1.clear();
+      _data1.addAll(response1['data']);
+    }
 
-      if (response2["data"] != "free") {
-        _data2.clear();
-        _data2.addAll(response2['data']);
-      }
+    if (response2["data"] != "free") {
+      _data2.clear();
+      _data2.addAll(response2['data']);
+    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -293,21 +293,24 @@ class LineChartSample1State extends State<LineChartSample1> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-
               const SizedBox(
                 height: 20,
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0, left: 6.0),
-                  child: isShowChart ? _LineChart(_data1, _data2 , MediaQuery.of(context).size.height, MediaQuery.of(context).size.width) : SpinKitSpinningLines(color: Colors.black),
+                  child: isShowChart
+                      ? _LineChart(
+                          _data1,
+                          _data2,
+                          MediaQuery.of(context).size.height,
+                          MediaQuery.of(context).size.width)
+                      : SpinKitSpinningLines(color: Colors.black),
                 ),
               ),
-
             ],
           ),
           //    IconButton(onPressed: (){getChartData();}, icon: Icon(Icons.refresh)),
-
         ],
       ),
     );

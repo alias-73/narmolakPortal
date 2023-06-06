@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cool_alert/cool_alert.dart';
@@ -13,6 +15,7 @@ import 'package:sima_portal/a_sima_app/services/online_services.dart';
 import 'package:sima_portal/a_sima_app/taqalob/list_taqalob.dart';
 import 'package:sima_portal/a_sima_app/upload.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'Hesab/EditedReqChange_page.dart';
 import 'Hesab/list_hesab.dart';
 import 'Moaref/list_moaref.dart';
 import 'Pazirade/list_pazirande.dart';
@@ -33,7 +36,7 @@ class apps extends StatefulWidget {
   List<AgentModel> _data = [];
   List<AccessModel1> _data2 = [];
 
-  apps(this._data,this._data2);
+  apps(this._data, this._data2);
 
   @override
   State<StatefulWidget> createState() => register_pos_pageState();
@@ -60,8 +63,6 @@ class register_pos_pageState extends State<apps>
       null;
   }
 
-
-
   // final Uri _url = Uri.parse('https://flutter.dev');
   Future<void> _launchUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
@@ -69,46 +70,79 @@ class register_pos_pageState extends State<apps>
     }
   }
 
-  void getAccess(String section , Widget w) async {
+  void getAccess(String section, Widget w) async {
     String response = "_";
     // print(widget._data2[4].vaziat);
 
-      try {
-        section == "pazirande" ? response = widget._data2[0].vaziat :
-        section == "moaref" ? response = widget._data2[1].vaziat :
-        section == "hesab" ? response = widget._data2[2].vaziat :
-        section == "upload" ? response = widget._data2[3].vaziat :
-        section == "device" ? response = widget._data2[4].vaziat :
-        section == "takhsis" ? response = widget._data2[5].vaziat :
-        section == "jaygozini" ? response = widget._data2[6].vaziat :
-        section == "em" ? response = widget._data2[7].vaziat :
-        section == "terminal" ? response = widget._data2[8].vaziat :
-        section == "foroshgah" ? response = widget._data2[9].vaziat :
-        section == "hoviati" ? response = widget._data2[10].vaziat :
-        section == "apps" ? response = widget._data2[11].vaziat :
-        section == "payaneReq" ? response = widget._data2[12].vaziat : null;
-      } on Exception catch (exception) {
-    } catch (error) {
+    try {
+      section == "pazirande"
+          ? response = widget._data2[0].vaziat
+          : section == "moaref"
+              ? response = widget._data2[1].vaziat
+              : section == "hesab"
+                  ? response = widget._data2[2].vaziat
+                  : section == "upload"
+                      ? response = widget._data2[3].vaziat
+                      : section == "device"
+                          ? response = widget._data2[4].vaziat
+                          : section == "takhsis"
+                              ? response = widget._data2[5].vaziat
+                              : section == "jaygozini"
+                                  ? response = widget._data2[6].vaziat
+                                  : section == "em"
+                                      ? response = widget._data2[7].vaziat
+                                      : section == "terminal"
+                                          ? response = widget._data2[8].vaziat
+                                          : section == "foroshgah"
+                                              ? response =
+                                                  widget._data2[9].vaziat
+                                              : section == "hoviati"
+                                                  ? response =
+                                                      widget._data2[10].vaziat
+                                                  : section == "apps"
+                                                      ? response = widget
+                                                          ._data2[11].vaziat
+                                                      : section == "payaneReq"
+                                                          ? response = widget
+                                                              ._data2[12].vaziat
+                                                          : section ==
+                                                                  "changeHesab"
+                                                              ? response =
+                                                                  widget
+                                                                      ._data2[
+                                                                          13]
+                                                                      .vaziat
+                                                              : null;
+    } on Exception catch (exception) {
+    } catch (error) {}
+
+    if (response == "_" &&
+        section != "taqalob" &&
+        section != "register" &&
+        section != "changeHesab" &&
+        section != "estelam_senf") {
+      CoolAlert.show(
+          context: context,
+          type: CoolAlertType.error,
+          confirmBtnText: "بستن",
+          onConfirmBtnTap: () {
+            Navigator.pop(context);
+          },
+          title: "",
+          backgroundColor: Colors.white,
+          text:
+              "مجوز دسترسی به این بخش برای شما غیرفعال است. لطفا با پشتیبان برنامه تماس بگیرید");
+    } else {
+      section == "em"
+          ? _showEmMenu()
+          : Navigator.push(
+              context,
+              ScaleRoute(
+                  page: Directionality(
+                textDirection: TextDirection.rtl,
+                child: w,
+              )));
     }
-
-      if(response == "_" && section != "taqalob" && section != "register" && section != "estelam_senf"){
-        CoolAlert.show(
-            context: context,
-            type: CoolAlertType.error,
-            confirmBtnText: "بستن",
-            onConfirmBtnTap: (){
-              Navigator.pop(context);
-            },
-            title: "",
-            backgroundColor: Colors.white,
-            text: "مجوز دسترسی به این بخش برای شما غیرفعال است. لطفا با پشتیبان برنامه تماس بگیرید"
-        );
-      }
-      else {
-        section == "em" ? _showEmMenu():
-        Navigator.push(context, ScaleRoute(page: Directionality(textDirection: TextDirection.rtl, child: w,)));
-      }
-
   }
 
   bool loading = false;
@@ -218,12 +252,10 @@ class register_pos_pageState extends State<apps>
                       children: AnimationConfiguration.toStaggeredList(
                         duration: const Duration(milliseconds: 575),
                         childAnimationBuilder: (widget) => SlideAnimation(
-                          verticalOffset:
-                              MediaQuery.of(context).size.width / 2,
+                          verticalOffset: MediaQuery.of(context).size.width / 2,
                           child: FadeInAnimation(child: widget),
                         ),
                         children: [
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -232,26 +264,29 @@ class register_pos_pageState extends State<apps>
                                   "پذیرنده",
                                   "assets/images/pazirande.png",
                                   Color(0xff9c1208),
-                                  poses_list_page(widget._data) ,"pazirande"),
+                                  poses_list_page(widget._data),
+                                  "pazirande"),
                               items3(
                                   BuildContext,
                                   "معرف",
                                   "assets/images/moaref.png",
                                   Color(0xfffc9117),
-                                  list_moaref_page(widget._data) ,"moaref"),
+                                  list_moaref_page(widget._data),
+                                  "moaref"),
                               items3(
                                   BuildContext,
                                   "حساب",
                                   "assets/images/hesab.png",
                                   Color(0xff7a0982),
-                                  sheba_registered_page(widget._data) ,"hesab"),
+                                  sheba_registered_page(widget._data),
+                                  "hesab"),
                               items3(
                                   BuildContext,
                                   "مدارک",
                                   "assets/images/upload.png",
                                   Color(0xff06a801),
-                                  upload_doc(widget._data) ,"upload"),
-
+                                  upload_doc(widget._data),
+                                  "upload"),
                             ],
                           ),
                           SizedBox(
@@ -260,31 +295,34 @@ class register_pos_pageState extends State<apps>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-
                               items3(
                                   BuildContext,
                                   "دستگاه",
                                   "assets/images/device.png",
                                   Color(0xff595759),
-                                  device_list(widget._data) ,"device"),
+                                  device_list(widget._data),
+                                  "device"),
                               items3(
                                   BuildContext,
                                   "تخصیص",
                                   "assets/images/takhsis.png",
                                   Color(0xff0453d1),
-                                  pos_registered3_page(widget._data) ,"takhsis"),
+                                  pos_registered3_page(widget._data),
+                                  "takhsis"),
                               items3(
                                   BuildContext,
                                   "جایگزینی",
                                   "assets/images/replace.png",
                                   Color(0xff04b6d1),
-                                  list_jaygozini_page(widget._data) ,"jaygozini"),
+                                  list_jaygozini_page(widget._data),
+                                  "jaygozini"),
                               items3(
                                   BuildContext,
                                   "کارتابل EM",
                                   "assets/images/support.png",
                                   Color(0xffe60b0b),
-                                  em_cartableP_page(widget._data) ,"em"),
+                                  em_cartableP_page(widget._data),
+                                  "em"),
                             ],
                           ),
                           SizedBox(
@@ -293,35 +331,43 @@ class register_pos_pageState extends State<apps>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-
                               items4(
                                 BuildContext,
                                 "ترمینال ها",
                                 "assets/images/Terminal.png",
                                 Color(0xff5f5f00),
-                                ter(widget._data) ,"terminal",
+                                ter(widget._data),
+                                "terminal",
                               ),
                               items4(
                                   BuildContext,
                                   "ویرایش فروشگاه",
                                   "assets/images/shop.png",
                                   Color(0xff04b6d1),
-                                  editedStore_page(widget._data) ,"foroshgah"),
+                                  editedStore_page(widget._data),
+                                  "foroshgah"),
                               items4(
                                   BuildContext,
                                   "ویرایش هویتی",
                                   "assets/images/eslah.png",
                                   Color(0xffe60b0b),
-                                  list_edited_page(widget._data) ,"hoviati"),
-                              items4(
+                                  list_edited_page(widget._data),
+                                  "hoviati"),
+                              items3(
                                   BuildContext,
-                                  "درخواست ترمینال",
-                                  "assets/images/reqterminal.png",
-                                  Color(0xfffc9117),
-                                  listReqTerminal(widget._data) ,"payaneReq"),
+                                  "کارتابل PM",
+                                  "assets/images/supportPM.png",
+                                  Color(0xffe60b0b),
+                                  Center(),
+                                  "pm"),
+                              // items4(
+                              //     BuildContext,
+                              //     "درخواست ترمینال",
+                              //     "assets/images/reqterminal.png",
+                              //     Color(0xfffc9117),
+                              //     listReqTerminal(widget._data) ,"payaneReq"),
                             ],
                           ),
-
                           SizedBox(
                             height: 10,
                           ),
@@ -333,32 +379,40 @@ class register_pos_pageState extends State<apps>
                                   "رجیستری",
                                   "assets/images/register.png",
                                   Color(0xff04b6d1),
-                                  listIMEI(widget._data) ,"register"),
+                                  listIMEI(widget._data),
+                                  "register"),
                               items4(
                                   BuildContext,
                                   "استعلام صنف",
                                   "assets/images/estelam.png",
                                   Color(0xff04b6d1),
-                                  estelam_senf() ,"estelam_senf"),
+                                  estelam_senf(),
+                                  "estelam_senf"),
                               items4(
                                   BuildContext,
                                   "کشف تقلب",
                                   "assets/images/taqalob.png",
                                   Color(0xff04b6d1),
-                                  list_taqalob_page(widget._data) ,"taqalob"),
+                                  list_taqalob_page(widget._data),
+                                  "taqalob"),
                               items5(
                                   BuildContext,
                                   "اپ دستگاه ها",
                                   "assets/images/download.png",
-                                  Color(0xffe60b0b) ,"apps"),
+                                  Color(0xffe60b0b),
+                                  "apps"),
                             ],
                           ),
                           SizedBox(
                             height: 10,
                           ),
-
-
-
+                          items4(
+                              BuildContext,
+                              "تغییر حساب",
+                              "assets/images/hesab.png",
+                              Color(0xff04b6d1),
+                              editedReqChange_page(widget._data),
+                              "changeHesab"),
                         ],
                       ))),
             )
@@ -366,7 +420,8 @@ class register_pos_pageState extends State<apps>
         ));
   }
 
-  Widget items3(BuildContext, String title, String ic, Color c, Widget w , String section_name) {
+  Widget items3(BuildContext, String title, String ic, Color c, Widget w,
+      String section_name) {
     var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
     double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -432,13 +487,14 @@ class register_pos_pageState extends State<apps>
         ),
       ),
       onTap: () {
-          getAccess(section_name , w);
+        getAccess(section_name, w);
         setState(() {});
       },
     );
   }
 
-  Widget items4(BuildContext, String title, String ic, Color c, Widget w , String section_name) {
+  Widget items4(BuildContext, String title, String ic, Color c, Widget w,
+      String section_name) {
     var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
     double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -487,7 +543,8 @@ class register_pos_pageState extends State<apps>
                           width: icSize2,
                         )
                       : Image.asset(
-                          color: ic.contains("registerss") ? Colors.red : icColor,
+                          color:
+                              ic.contains("registerss") ? Colors.red : icColor,
                           ic,
                           height: icSize,
                           width: icSize,
@@ -511,7 +568,8 @@ class register_pos_pageState extends State<apps>
     );
   }
 
-  Widget items5(BuildContext, String title, String ic, Color c , String section_name) {
+  Widget items5(
+      BuildContext, String title, String ic, Color c, String section_name) {
     var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
     double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -559,12 +617,15 @@ class register_pos_pageState extends State<apps>
         ),
       ),
       onTap: () {
-        getAccess(section_name, Center());
+        section_name == "apps"
+            ? _launchUrl("https://sima-pay.com/home/downloadfile")
+            : getAccess(section_name, Center());
       },
     );
   }
 
-  Widget items2(BuildContext, String title, String ic, Color c, Widget w , String section_name) {
+  Widget items2(BuildContext, String title, String ic, Color c, Widget w,
+      String section_name) {
     c = Color(0xffbebebe);
     var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
@@ -635,14 +696,15 @@ class register_pos_pageState extends State<apps>
         ),
       ),
       onTap: () {
-         getAccess(section_name , w);
+        getAccess(section_name, w);
 
         setState(() {});
       },
     );
   }
 
-  Widget items1(BuildContext, String title, String ic, Color c, Widget w , String section_name) {
+  Widget items1(BuildContext, String title, String ic, Color c, Widget w,
+      String section_name) {
     c = Color(0xffbebebe);
     var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
@@ -722,7 +784,7 @@ class register_pos_pageState extends State<apps>
       ),
       onTap: () {
         // Navigator.push(context, MaterialPageRoute(builder: (context) => Directionality(textDirection: TextDirection.rtl, child: w)));
-        getAccess(section_name , w);
+        getAccess(section_name, w);
         // Navigator.push(context, ScaleRoute(page: Directionality(textDirection: TextDirection.rtl, child: w,)));
 
         setState(() {});
@@ -732,6 +794,7 @@ class register_pos_pageState extends State<apps>
 
   void _showEmMenu() {
     var size = MediaQuery.of(context).size;
+
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -747,74 +810,77 @@ class register_pos_pageState extends State<apps>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            color: Color(0xffffffff)),
-                        width: size.width * .75,
-                        height: size.height * .4,
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            const Text(
-                              "ایران کیش",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w800, fontSize: 19),
-                            ),
-                            Image.asset("assets/images/irankish.png"),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            ScaleRoute(
-                                page: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: em_cartableI_page(widget._data),
-                            )));
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        w_pspItem(1),
+                        w_pspItem(2),
+                      ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 45,
                     ),
-                    GestureDetector(
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
-                              color: Color(0xffffffff)),
-                          width: size.width * .75,
-                          height: size.height * .4,
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              const Text(
-                                "پاسارگاد",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w800, fontSize: 19),
-                              ),
-                              Image.asset("assets/images/pasargad.png"),
-                            ],
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              ScaleRoute(
-                                  page: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: em_cartableP_page(widget._data),
-                              )));
-                        }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        w_pspItem(3),
+                        w_pspItem(4),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 45,
+                    ),
+                    w_pspItem(5),
                   ],
                 ),
               ));
         });
+  }
+
+  Widget w_pspItem(int psp) {
+    var size = MediaQuery.of(context).size;
+
+    var wBox = size.width * .4;
+    var hBox = size.width * .4;
+    return GestureDetector(
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            color: Color(0xffffffff)),
+        width: wBox,
+        height: hBox,
+        // padding: EdgeInsets.all(20),
+        child: psp == 1
+            ? Image.asset("assets/images/pasargad.png")
+            : psp == 2
+                ? Image.asset("assets/images/irankish.png")
+                : psp == 3
+                    ? Image.asset("assets/images/sepehr.png")
+                    : psp == 4
+                        ? Image.asset("assets/images/sadad.png")
+                        : psp == 5
+                            ? Image.asset("assets/images/novin.png")
+                            : Center(),
+      ),
+      onTap: () {
+        Navigator.pop(context);
+        psp == 1
+            ? Navigator.push(
+                context,
+                ScaleRoute(
+                    page: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: em_cartableP_page(widget._data))))
+            : psp == 2
+                ? Navigator.push(
+                    context,
+                    ScaleRoute(
+                        page: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: em_cartableI_page(widget._data))))
+                : null;
+      },
+    );
   }
 }

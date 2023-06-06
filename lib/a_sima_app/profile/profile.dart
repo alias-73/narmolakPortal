@@ -61,7 +61,6 @@ class sampleState extends State<profile_page>
   bool maliyat = false;
   bool Smaliyat = false;
 
-
   Future<List<UserInfModel>> getName() async {
     Map response2;
     response2 = await OnlineServices.getName2({
@@ -192,19 +191,24 @@ class sampleState extends State<profile_page>
                                                                 .33,
                                                           )
                                                         : SizedBox(
-                                                            width: size.width * .33,
-                                                            height: size.width * .33,
+                                                            width: size.width *
+                                                                .33,
+                                                            height: size.width *
+                                                                .33,
                                                             child:
                                                                 CachedNetworkImage(
-                                                              imageUrl: snapshot
-                                                                  .data!
-                                                                  .toString(),
-                                                              // imageUrl: "https://pos.sima-pay.com//upload/Image/Agent/${widget._AgentData.last.agentCode}${widget._AgentData.last.userCode}.jpg",
+                                                              // imageUrl: snapshot
+                                                              //     .data!
+                                                              //     .toString(),
+                                                              imageUrl:
+                                                                  "https://pos.sima-pay.com//upload/Image/Agent/${widget._AgentData.last.agentCode}${widget._AgentData.last.userCode}.jpg",
                                                               placeholder: (context,
                                                                       url) =>
                                                                   Image.asset(
                                                                       "assets/images/person.png"),
-                                                              errorWidget: (context, url, errorgetIMG) =>
+                                                              errorWidget: (context,
+                                                                      url,
+                                                                      errorgetIMG) =>
                                                                   Image.asset(
                                                                       "assets/images/person.png"),
                                                             ))))),
@@ -415,16 +419,15 @@ class sampleState extends State<profile_page>
                       ? () {}
                       : title.contains("شعب")
                           ? () {}
-                        : title.contains("تغییر")
-                          ? () {}
-
-                          : Navigator.push(
-                              context,
-                              ScaleRoute(
-                                  page: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: f,
-                              )));
+                          : title.contains("تغییر")
+                              ? () {}
+                              : Navigator.push(
+                                  context,
+                                  ScaleRoute(
+                                      page: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: f,
+                                  )));
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -465,17 +468,19 @@ class sampleState extends State<profile_page>
               ? () {}
               : title.contains("پرداخت")
                   ? () {}
-                  : title.contains("کیش")
+                  : title.contains("سپهر")
                       ? () {}
-                      : title.contains("شعب")
+                      : title.contains("کیش")
                           ? () {}
-                          : Navigator.push(
-                              context,
-                              ScaleRoute(
-                                  page: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: f,
-                              )));
+                          : title.contains("شعب")
+                              ? () {}
+                              : Navigator.push(
+                                  context,
+                                  ScaleRoute(
+                                      page: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: f,
+                                  )));
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.white),

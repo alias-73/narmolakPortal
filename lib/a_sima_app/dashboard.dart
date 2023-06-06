@@ -32,7 +32,6 @@ import 'models/messageModel.dart';
 
 import 'models/notifyModel.dart';
 
-
 // Future<void> sss() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   await initializeService();
@@ -138,7 +137,6 @@ Future checkNotify() async {
   //else print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 }
 
-
 class dashboard extends StatefulWidget {
   List<AgentModel> _data = [];
 
@@ -162,15 +160,14 @@ class dashboardState extends State<dashboard>
 
   Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {
     return <String, dynamic>{
-
       'version.sdkInt': build.version.sdkInt,
       'version.release': build.version.release,
       'brand': build.brand,
       'manufacturer': build.manufacturer,
       'model': build.model,
-
     };
   }
+
   List<PersonalMessageModel> _message = [];
   String msg = " s";
   List<MessageModel> _msg = [];
@@ -201,7 +198,6 @@ class dashboardState extends State<dashboard>
     Colors.teal,
     Color(0xff700039),
     Color(0x738969FC)
-
   ];
 
   ChartType _chartType = ChartType.ring;
@@ -226,15 +222,23 @@ class dashboardState extends State<dashboard>
   bool isShowChart = false;
   String target1 = "";
   String target2 = "";
-  late double EmPercent ;
+  late double EmPercent;
   String EmAll = "";
   String EmBaz = "";
 
   @override
   initState() {
     initPlatformState();
-    PersianDate persianDate = PersianDate();  today = persianDate.getDate.toString().substring(0, persianDate.getDate.toString().length - 13).replaceAll("-", "/");
-    String h = DateTime.now().hour.toString();if (h.length == 1) h= "0" + h;String m = DateTime.now().minute.toString(); if (m.length == 1) m = "0" + m;String datetime =h + ":" + m;
+    PersianDate persianDate = PersianDate();
+    today = persianDate.getDate
+        .toString()
+        .substring(0, persianDate.getDate.toString().length - 13)
+        .replaceAll("-", "/");
+    String h = DateTime.now().hour.toString();
+    if (h.length == 1) h = "0" + h;
+    String m = DateTime.now().minute.toString();
+    if (m.length == 1) m = "0" + m;
+    String datetime = h + ":" + m;
 
     getCountOfPSP();
 
@@ -257,10 +261,9 @@ class dashboardState extends State<dashboard>
         "version": _deviceData['version.release'],
         "manufacturer": _deviceData['manufacturer'],
         "brand": _deviceData['brand'],
-        "model":  _deviceData['model'],
+        "model": _deviceData['model'],
       });
     });
-
 
     _getMsg();
     _getAlarm();
@@ -269,10 +272,10 @@ class dashboardState extends State<dashboard>
     // menu2 = false;
     getInformation();
     _animationController =
-    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-      ..addListener(() {
-        setState(() {});
-      });
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+          ..addListener(() {
+            setState(() {});
+          });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _buttonColor = ColorTween(
@@ -303,10 +306,9 @@ class dashboardState extends State<dashboard>
   Future<void> initPlatformState() async {
     var deviceData = <String, dynamic>{};
 
-        if (Platform.isAndroid) {
-          deviceData =
-              _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-        }
+    if (Platform.isAndroid) {
+      deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+    }
 
     if (!mounted) return;
 
@@ -330,15 +332,10 @@ class dashboardState extends State<dashboard>
     isOpened = !isOpened;
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     final dataMap = <String, double>{
       "ایران کیش": IRANKISH,
       "پاسارگاد": PASARGAD,
@@ -348,7 +345,6 @@ class dashboardState extends State<dashboard>
       "سپهر": SEPEHR,
     };
     final chart = PieChart(
-
       key: ValueKey(key),
 
       ///totalValue: 35,
@@ -357,23 +353,13 @@ class dashboardState extends State<dashboard>
       //legendLabels: {"a":"b" , "h":"s"},
       animationDuration: Duration(milliseconds: 3000),
       chartLegendSpacing: _chartLegendSpacing,
-      chartRadius: MediaQuery
-          .of(context)
-          .size
-          .width / 3.2 > 500
-          ? MediaQuery
-          .of(context)
-          .size
-          .width * .4
-          : MediaQuery
-          .of(context)
-          .size
-          .width * .4,
+      chartRadius: MediaQuery.of(context).size.width / 3.2 > 500
+          ? MediaQuery.of(context).size.width * .4
+          : MediaQuery.of(context).size.width * .4,
       colorList: colorList,
       initialAngleInDegree: 0,
       chartType: _chartType,
       legendOptions: LegendOptions(
-
         showLegendsInRow: false,
         legendPosition: _legendPosition,
         showLegends: false,
@@ -385,7 +371,6 @@ class dashboardState extends State<dashboard>
       chartValuesOptions: const ChartValuesOptions(
         showChartValueBackground: true,
         showChartValues: true,
-
         showChartValuesInPercentage: true,
         showChartValuesOutside: true,
       ),
@@ -399,106 +384,111 @@ class dashboardState extends State<dashboard>
       ],
     );
 
-
     return Stack(
-
       alignment: Alignment.bottomCenter,
       children: [
         WillPopScope(
             child: SafeArea(
               child: Scaffold(
                 body: SingleChildScrollView(
-                    child:
-                    Stack(
-                      children: [
-                        Visibility(visible: true, child:
-                        Column(
-                          children: [
-                            // StreamBuilder<Map<String, dynamic>>(
-                            //   stream: FlutterBackgroundService().on('update'),
-                            //   builder: (context, snapshot) {
-                            //     if (!snapshot.hasData) {
-                            //       return const Center(
-                            //         child: Center(),
-                            //       );
-                            //     }
-                            //
-                            //     final data = snapshot.data!;
-                            //     String device = data["device"];
-                            //     DateTime date = DateTime.tryParse(data["current_date"]);
-                            //     return Column(
-                            //       children: [
-                            //         //  Text(date.toString()),
-                            //       ],
-                            //     );
-                            //   },
-                            // ),
-                            // ElevatedButton(
-                            //   child: const Text("Foreground Mode"),
-                            //   onPressed: () {
-                            //     FlutterBackgroundService().invoke("setAsForeground");
-                            //   },
-                            // ),
-                            // ElevatedButton(
-                            //   child: const Text("Background Mode"),
-                            //   onPressed: () {
-                            //     FlutterBackgroundService().invoke("setAsBackground");
-                            //   },
-                            // ),
-
-                          ],
-                        ),),
-
-                        Container(
-                          //margin: EdgeInsets.only(top: 8,bottom: 5),
-                          // height: mainHeight * .2,
-                            color: Color(0xffdedede),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .spaceAround,
-                                children: AnimationConfiguration.toStaggeredList(
-                                  duration: const Duration(milliseconds: 575),
-                                  childAnimationBuilder: (widget) => SlideAnimation(
-                                    verticalOffset:
+                    child: Stack(
+                  children: [
+                    Visibility(
+                      visible: true,
+                      child: Column(
+                        children: [
+                          // StreamBuilder<Map<String, dynamic>>(
+                          //   stream: FlutterBackgroundService().on('update'),
+                          //   builder: (context, snapshot) {
+                          //     if (!snapshot.hasData) {
+                          //       return const Center(
+                          //         child: Center(),
+                          //       );
+                          //     }
+                          //
+                          //     final data = snapshot.data!;
+                          //     String device = data["device"];
+                          //     DateTime date = DateTime.tryParse(data["current_date"]);
+                          //     return Column(
+                          //       children: [
+                          //         //  Text(date.toString()),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
+                          // ElevatedButton(
+                          //   child: const Text("Foreground Mode"),
+                          //   onPressed: () {
+                          //     FlutterBackgroundService().invoke("setAsForeground");
+                          //   },
+                          // ),
+                          // ElevatedButton(
+                          //   child: const Text("Background Mode"),
+                          //   onPressed: () {
+                          //     FlutterBackgroundService().invoke("setAsBackground");
+                          //   },
+                          // ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        //margin: EdgeInsets.only(top: 8,bottom: 5),
+                        // height: mainHeight * .2,
+                        color: Color(0xffdedede),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: AnimationConfiguration.toStaggeredList(
+                              duration: const Duration(milliseconds: 575),
+                              childAnimationBuilder: (widget) => SlideAnimation(
+                                verticalOffset:
                                     MediaQuery.of(context).size.width / 2,
-                                    child: FadeInAnimation(child: widget),
-                                  ),
-                                  children: [
-                                SizedBox(height: 7,),
+                                child: FadeInAnimation(child: widget),
+                              ),
+                              children: [
+                                SizedBox(
+                                  height: 7,
+                                ),
                                 SizedBox(
                                   height: size.height * .35,
                                   width: size.width,
                                   child: LineChartPage(widget._data),
                                 ),
-                                SizedBox(height: 7,),
+                                SizedBox(
+                                  height: 7,
+                                ),
                                 itemInfo1(),
 
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 circularInd1(),
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
 
                                 circularInd2(),
-                                SizedBox(height: 9,),
+                                SizedBox(
+                                  height: 9,
+                                ),
 
                                 //   loading(),
                                 Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(0)
-                                  ),
+                                      borderRadius: BorderRadius.circular(0)),
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.center,
                                   height: size.height * .7 * .5,
                                   width: size.width * .92,
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment
-                                        .spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Column(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .center,
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             itmColor("ایران کیش", CIran),
                                             itmColor("پاسارگاد", CPasargad),
@@ -507,7 +497,6 @@ class dashboardState extends State<dashboard>
                                             itmColor("سپهر", CSep),
                                             itmColor("پرداخت نوین", CPN),
                                           ]),
-
                                       LayoutBuilder(
                                         builder: (_, constraints) {
                                           if (constraints.maxWidth >= 600) {
@@ -520,19 +509,20 @@ class dashboardState extends State<dashboard>
                                           }
                                         },
                                       ),
-                                      SizedBox(width: 5,)
+                                      SizedBox(
+                                        width: 5,
+                                      )
                                     ],
                                   ),
                                 ),
 
-                                SizedBox(height: 10,),
-
+                                SizedBox(
+                                  height: 10,
+                                ),
                               ],
-
-                            ))
-                        )],
-                    )
-                ),
+                            )))
+                  ],
+                )),
               ),
             ),
             onWillPop: () {
@@ -542,11 +532,13 @@ class dashboardState extends State<dashboard>
                 confirmBtnText: "   بله  ",
                 cancelBtnText: "نه",
                 showCancelBtn: false,
-                onCancelBtnTap: (){
+                onCancelBtnTap: () {
                   Navigator.pop;
                 },
                 type: CoolAlertType.warning,
-                onConfirmBtnTap: (){exit(0);},
+                onConfirmBtnTap: () {
+                  exit(0);
+                },
                 text: 'آیا از برنامه خارج می شوید؟',
                 backgroundColor: Colors.white,
               );
@@ -603,26 +595,22 @@ class dashboardState extends State<dashboard>
                   // ),
                   // SizedBox(height: 25,),
                   //   toggle()
-
                 ],
               ),
             ],
           ),
         ),
-
       ],
     );
   }
 
   Widget circularInd1() {
-    var size = MediaQuery
-        .of(context)
-        .size;
-    String info = "نماینده در طول ماه جاری باید تلاش نماید تا به هدف مشخص شده در ثبت و فعال سازی پرونده برسد.در صورتی که نماینده به هدف بازاریابی مشخص شده برسد، در پایان آن ماه 10 درصد پاداش در صورت وضعیت لحاظ خواهد گردید.و در صورتی که نماینده بیشتر از 20 درصد از هدف مشخص شده فاصله داشته باشد 10 درصد از صورت وضعیت نماینده کسر خواهد گردید.";
+    var size = MediaQuery.of(context).size;
+    String info =
+        "نماینده در طول ماه جاری باید تلاش نماید تا به هدف مشخص شده در ثبت و فعال سازی پرونده برسد.در صورتی که نماینده به هدف بازاریابی مشخص شده برسد، در پایان آن ماه 10 درصد پاداش در صورت وضعیت لحاظ خواهد گردید.و در صورتی که نماینده بیشتر از 20 درصد از هدف مشخص شده فاصله داشته باشد 10 درصد از صورت وضعیت نماینده کسر خواهد گردید.";
 
-    return Stack(
-      children: [
-        Container(
+    return Stack(children: [
+      Container(
           height: size.height * .2,
           alignment: Alignment.center,
           width: size.width * .92,
@@ -632,62 +620,90 @@ class dashboardState extends State<dashboard>
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-
                   Color(0xffeea100),
                   Color(0xffeea100),
-
                 ],
               )
-            //color: Color(0xffeea100),
-          ),
+              //color: Color(0xffeea100),
+              ),
           child: Stack(
-              children: [ Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            SizedBox(width: size.width * .4,child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("هدف این ماه", textAlign: TextAlign.right,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24),),
-                Row(
-                  children: [
-                    Text(target1 + " / ", textAlign: TextAlign.right,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),),
-                    Text(target2, textAlign: TextAlign.right,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),),
-
-                  ],
-                )
-
-              ],
-            ),),
-            FutureBuilder<String>(
-              future: getTarget(),
-              builder: (context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.hasData) {
-                  return CircularPercentIndicator(
-                    radius: 60.0,
-                    lineWidth: 20.0,
-                    animation: true,
-                    percent: double.parse(snapshot.data.toString().split(",")[0]) /
-                        100,
-                    //   percent: double.parse(snapshot.data.toString()),
-                    backgroundColor: Colors.black,
-                    center: Text("${snapshot.data?.split(",")[0]}%",
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),),
-                    progressColor: Color(0xffffffff),
-                  );
-                } else {
-                  return Container();
-                }
-                //Parikhasteh
-              },
-            ),
-
-          ]),
-            Padding(padding: EdgeInsets.only(right: 3,top: 3),child: Align(alignment: Alignment.topRight,child: GestureDetector(child: Image.asset("assets/images/info.png",height: (size.height * .25 ) * .15,),onTap:  ()async{
-
-      _showDialog(info);}),),)
-    ],))]);
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                SizedBox(
+                  width: size.width * .4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "هدف این ماه",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 24),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            target1 + " / ",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900, fontSize: 20),
+                          ),
+                          Text(
+                            target2,
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900, fontSize: 30),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                FutureBuilder<String>(
+                  future: getTarget(),
+                  builder: (context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return CircularPercentIndicator(
+                        radius: 60.0,
+                        lineWidth: 20.0,
+                        animation: true,
+                        percent: double.parse(
+                                snapshot.data.toString().split(",")[0]) /
+                            100,
+                        //   percent: double.parse(snapshot.data.toString()),
+                        backgroundColor: Colors.black,
+                        center: Text(
+                          "${snapshot.data?.split(",")[0]}%",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 20),
+                        ),
+                        progressColor: Color(0xffffffff),
+                      );
+                    } else {
+                      return Container();
+                    }
+                    //Parikhasteh
+                  },
+                ),
+              ]),
+              Padding(
+                padding: EdgeInsets.only(right: 3, top: 3),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                      child: Image.asset(
+                        "assets/images/info.png",
+                        height: (size.height * .25) * .15,
+                      ),
+                      onTap: () async {
+                        _showDialog(info);
+                      }),
+                ),
+              )
+            ],
+          ))
+    ]);
   }
 
   Widget circularInd2() {
@@ -698,286 +714,389 @@ class dashboardState extends State<dashboard>
 
     String info =
         "در صورتی که پذیرنده های ثبت شده توسط نماینده به صورت تلفنی و با استفاده از اپلیکیشن ها مربوطه اقدام به ثبت درخواست پشتیبانی نمایند ، در این بخش نمایش داده خواهد شد\nنماینده با توجه به سوئیچ باید اقدام به رفع آن نماید.مهلت اقدام برای هر درخواست 48 ساعت می باشد.\nدر صورت عدم اقدام در زمان اعلام شده، به ازای هر درخواست روزانه نماینده جریمه خواهد شد.";
-    return  FutureBuilder<String>(
+    return FutureBuilder<String>(
       future: getEmBazCount(),
       builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.hasData) {
-          return
-              Container(
+          return Container(
               height: size.height * .24,
               alignment: Alignment.center,
               width: size.width * .92,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(0),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xffe0dddd),
-                      double.parse(snapshot.data.toString().split(",")[0]) < 20 ?  c1
-                    : double.parse(snapshot.data.toString().split(",")[0]) < 80 ?  c2
-                    : double.parse(snapshot.data.toString().split(",")[0]) < 101 ? c3
-                          : Color(0xffb4b4b4)
-                  ],
-                )
-            ),
-            child: Stack(
-                children: [ Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              SizedBox(width: size.width * .4,child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                    Text("EM", textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24),),
-                    Image.asset("assets/images/pasargad.png",height: 40,)
-                  ]),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(children: [
-                        Text("کل\n" + snapshot.data.toString().split(",")[1] , textAlign: TextAlign.right,
-                          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),)
-                      ]),
-                      Column(children: [
-                        Text("باز\n" + snapshot.data.toString().split(",")[2] , textAlign: TextAlign.right,
-                          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),)
-                      ]),
-
-
+                  borderRadius: BorderRadius.circular(0),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xffe0dddd),
+                      double.parse(snapshot.data.toString().split(",")[0]) < 20
+                          ? c1
+                          : double.parse(
+                                      snapshot.data.toString().split(",")[0]) <
+                                  80
+                              ? c2
+                              : double.parse(snapshot.data
+                                          .toString()
+                                          .split(",")[0]) <
+                                      101
+                                  ? c3
+                                  : Color(0xffb4b4b4)
                     ],
-                  ),
-                  ElevatedButton(onPressed: (){  Navigator.push(context, ScaleRoute(page: Directionality(textDirection: TextDirection.rtl,child: em_cartableP_page(widget._data),)));},style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xff000000))), child: Text("نمایش همه"))
+                  )),
+              child: Stack(
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                            width: size.width * .4,
+                            child: Column(
+                              //crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "EM",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 24),
+                                      ),
+                                      Image.asset(
+                                        "assets/images/pasargad.png",
+                                        height: 40,
+                                      )
+                                    ]),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(children: [
+                                      Text(
+                                        "کل\n" +
+                                            snapshot.data
+                                                .toString()
+                                                .split(",")[1],
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 20),
+                                      )
+                                    ]),
+                                    Column(children: [
+                                      Text(
+                                        "باز\n" +
+                                            snapshot.data
+                                                .toString()
+                                                .split(",")[2],
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 20),
+                                      )
+                                    ]),
+                                  ],
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          ScaleRoute(
+                                              page: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child:
+                                                em_cartableP_page(widget._data),
+                                          )));
+                                    },
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Color(0xff000000))),
+                                    child: Text("نمایش همه"))
+                              ],
+                            )),
+                        CircularPercentIndicator(
+                          radius: 60.0,
+                          lineWidth: 20.0,
+                          animation: true,
+                          percent: double.parse(
+                                  snapshot.data.toString().split(",")[0]) /
+                              100,
+                          progressColor: Colors.white,
+                          center: Text(
+                            "${snapshot.data?.split(",")[0]}%",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 20),
+                          ),
+                          backgroundColor: double.parse(
+                                      snapshot.data.toString().split(",")[0]) <
+                                  20
+                              ? Color(0xff2abb26)
+                              : double.parse(snapshot.data
+                                          .toString()
+                                          .split(",")[0]) <
+                                      80
+                                  ? Color(0xffcb882b)
+                                  : double.parse(snapshot.data
+                                              .toString()
+                                              .split(",")[0]) <
+                                          101
+                                      ? Color(0xffaf2828)
+                                      : Color(0xffb4b4b4),
+                        )
 
+                        //SizedBox(width: size.width * .1,),
+                      ]),
+                  Padding(
+                    padding: EdgeInsets.only(right: 3, top: 3),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                          child: Image.asset(
+                            "assets/images/info.png",
+                            height: (size.height * .25) * .15,
+                          ),
+                          onTap: () {
+                            _showDialog(info);
+                          }),
+                    ),
+                  )
                 ],
-              )),
-              CircularPercentIndicator(
-                radius: 60.0,
-                lineWidth: 20.0,
-                animation: true,
-                percent: double.parse(snapshot.data.toString().split(",")[0]) / 100,
-                progressColor: Colors.white,
-                center: Text("${snapshot.data?.split(",")[0]}%",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),),
-                backgroundColor: double.parse(snapshot.data.toString().split(",")[0]) < 20 ? Color(0xff2abb26)
-                    : double.parse(snapshot.data.toString().split(",")[0]) < 80 ? Color(0xffcb882b)
-                    : double.parse(snapshot.data.toString().split(",")[0]) < 101 ?Color(
-                    0xffaf2828)
-                    : Color(0xffb4b4b4),
-              )
-
-              //SizedBox(width: size.width * .1,),
-
-            ]),
-                  Padding(padding: EdgeInsets.only(right: 3,top: 3),child: Align(alignment: Alignment.topRight,child: GestureDetector(child: Image.asset("assets/images/info.png",height: (size.height * .25 ) * .15,),onTap: (){
-                   _showDialog(info);
-                  }),),)
-                ],));
+              ));
         } else {
           return Container();
         }
       },
-
     );
-
-
   }
 
   void _showDialog3() {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
-        barrierLabel: MaterialLocalizations
-            .of(context)
-            .modalBarrierDismissLabel,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: Colors.black45,
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext,
-            Animation animation,
+        pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
-          return Scaffold(backgroundColor: Color(0x69bcdeff), body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Color(
-                            0xffffffff)),
-                    width: size.width * .75,
-                    height: size.height * .35,
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        const Text("محصولات", style: TextStyle(
-                            fontWeight: FontWeight.w800, fontSize: 19),),
-                        Image.asset("assets/images/devices.jpg"),
-                      ],
-                    ),
-                  ), onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, ScaleRoute(page: Directionality(
-                    textDirection: TextDirection.rtl, child: list_products(
-                      widget._data),)));
-                },
-                ),
-                SizedBox(height: 20,),
-                GestureDetector(
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                          color: Color(0xffffffff)),
-                      width: size.width * .75,
-                      height: size.height * .35,
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          const Text("آموزش", style: TextStyle(
-                              fontWeight: FontWeight.w800, fontSize: 19),),
-                          Image.asset("assets/images/learning.png"),
-                        ],
+          return Scaffold(
+              backgroundColor: Color(0x69bcdeff),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            color: Color(0xffffffff)),
+                        width: size.width * .75,
+                        height: size.height * .35,
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            const Text(
+                              "محصولات",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800, fontSize: 19),
+                            ),
+                            Image.asset("assets/images/devices.jpg"),
+                          ],
+                        ),
                       ),
-                    ), onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, ScaleRoute(page: Directionality(
-                    textDirection: TextDirection.rtl, child: list_videos(
-                      widget._data),)));
-                }),
-
-              ],
-            ),
-          ));
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            ScaleRoute(
+                                page: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: list_products(widget._data),
+                            )));
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              color: Color(0xffffffff)),
+                          width: size.width * .75,
+                          height: size.height * .35,
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "آموزش",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 19),
+                              ),
+                              Image.asset("assets/images/learning.png"),
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              ScaleRoute(
+                                  page: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: list_videos(widget._data),
+                              )));
+                        }),
+                  ],
+                ),
+              ));
         });
   }
 
   void _showEmMenu() {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
-        barrierLabel: MaterialLocalizations
-            .of(context)
-            .modalBarrierDismissLabel,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: Colors.black45,
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext,
-            Animation animation,
+        pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
-          return Scaffold(backgroundColor: Color(0x69bcdeff), body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Color(
-                            0xffffffff)),
-                    width: size.width * .75,
-                    height: size.height * .4,
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        const Text("ایران کیش", style: TextStyle(
-                            fontWeight: FontWeight.w800, fontSize: 19),),
-                        Image.asset("assets/images/irankish.png"),
-                      ],
-                    ),
-                  ), onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, ScaleRoute(page: Directionality(
-                    textDirection: TextDirection.rtl, child: em_cartableI_page(
-                      widget._data),)));
-                },
-                ),
-                SizedBox(height: 20,),
-                GestureDetector(
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                          color: Color(0xffffffff)),
-                      width: size.width * .75,
-                      height: size.height * .4,
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          const Text("پاسارگاد", style: TextStyle(
-                              fontWeight: FontWeight.w800, fontSize: 19),),
-                          Image.asset("assets/images/pasargad.png"),
-                        ],
+          return Scaffold(
+              backgroundColor: Color(0x69bcdeff),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            color: Color(0xffffffff)),
+                        width: size.width * .75,
+                        height: size.height * .4,
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            const Text(
+                              "ایران کیش",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800, fontSize: 19),
+                            ),
+                            Image.asset("assets/images/irankish.png"),
+                          ],
+                        ),
                       ),
-                    ), onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, ScaleRoute(page: Directionality(
-                    textDirection: TextDirection.rtl, child: em_cartableP_page(
-                      widget._data),)));
-                }),
-
-              ],
-            ),
-          ));
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            ScaleRoute(
+                                page: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: em_cartableI_page(widget._data),
+                            )));
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              color: Color(0xffffffff)),
+                          width: size.width * .75,
+                          height: size.height * .4,
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "پاسارگاد",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 19),
+                              ),
+                              Image.asset("assets/images/pasargad.png"),
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              ScaleRoute(
+                                  page: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: em_cartableP_page(widget._data),
+                              )));
+                        }),
+                  ],
+                ),
+              ));
         });
   }
 
   Widget Menu2() {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          "assets/images/MaliyatLogo.jpg", height: (size.height * 0.5) * .6,),
+          "assets/images/MaliyatLogo.jpg",
+          height: (size.height * 0.5) * .6,
+        ),
         space(),
-        ElevatedButton(onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              Directionality(textDirection: TextDirection.rtl,
-                  child: maliyat_list_page(widget._data, 1))));
-        },
+        ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: maliyat_list_page(widget._data, 1))));
+            },
             child: Text("   نمایش لیست فوری   ",
                 style: TextStyle(fontSize: 25, color: Colors.white))),
         space(),
-        ElevatedButton(onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              Directionality(textDirection: TextDirection.rtl,
-                  child: maliyat_list_page(widget._data, 2))));
-        },
+        ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: maliyat_list_page(widget._data, 2))));
+            },
             child: Text("  نمایش لیست خیلی فوری  ",
-                style: TextStyle(fontSize: 25, color: Colors.white))
-        )
-
-
+                style: TextStyle(fontSize: 25, color: Colors.white)))
       ],
     );
   }
 
   Widget space() {
-    return SizedBox(height: 28,);
+    return SizedBox(
+      height: 28,
+    );
   }
 
-
-
-  Widget items2(BuildContext, String title, String ic, Color c, Widget w,
-      int di) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+  Widget items2(
+      BuildContext, String title, String ic, Color c, Widget w, int di) {
+    var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
-    double statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    double statusBarHeight = MediaQuery.of(context).padding.top;
     double fontSize = 25;
     double icSize = size.width * 0.15;
     double icSize2 = size.width * 0.25;
@@ -1010,23 +1129,22 @@ class dashboardState extends State<dashboard>
                   // alignment: Alignment.center,
                   child: ic == "assets/images/takhsis.png"
                       ? Image.asset(
-                    ic,
-                    height: icSize2,
-                    width: icSize2,
-                  )
+                          ic,
+                          height: icSize2,
+                          width: icSize2,
+                        )
                       : ic == "assets/images/replace.png"
-                      ? Image.asset(
-                    ic,
-                    height: icSize2,
-                    width: icSize2,
-                  )
-                      : Image.asset(
-                    ic,
-                    height: icSize,
-                    width: icSize,
-                  ),
+                          ? Image.asset(
+                              ic,
+                              height: icSize2,
+                              width: icSize2,
+                            )
+                          : Image.asset(
+                              ic,
+                              height: icSize,
+                              width: icSize,
+                            ),
                 ),
-
               ],
             ),
             // دستگاه پذیرنده تخصیص جایگزینی ای ام
@@ -1039,8 +1157,11 @@ class dashboardState extends State<dashboard>
         ),
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-            Directionality(textDirection: TextDirection.rtl, child: w)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Directionality(
+                    textDirection: TextDirection.rtl, child: w)));
 
         setState(() {});
       },
@@ -1048,14 +1169,9 @@ class dashboardState extends State<dashboard>
   }
 
   Widget items(BuildContext, String title, String ic, Color c, Widget w) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
-    double statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    double statusBarHeight = MediaQuery.of(context).padding.top;
     // dynamic w = list_moaref_page(widget._data);
     double fontSize = 25;
     double h = 0.2;
@@ -1083,21 +1199,21 @@ class dashboardState extends State<dashboard>
               alignment: Alignment.center,
               child: ic == "assets/images/takhsis.png"
                   ? Image.asset(
-                ic,
-                height: icSize2,
-                width: icSize2,
-              )
+                      ic,
+                      height: icSize2,
+                      width: icSize2,
+                    )
                   : ic == "assets/images/replace.png"
-                  ? Image.asset(
-                ic,
-                height: icSize2,
-                width: icSize2,
-              )
-                  : Image.asset(
-                ic,
-                height: icSize,
-                width: icSize,
-              ),
+                      ? Image.asset(
+                          ic,
+                          height: icSize2,
+                          width: icSize2,
+                        )
+                      : Image.asset(
+                          ic,
+                          height: icSize,
+                          width: icSize,
+                        ),
             ),
             Text(
               title,
@@ -1110,36 +1226,37 @@ class dashboardState extends State<dashboard>
         ),
       ),
       onTap: () {
-        title == "محصولات" ? _showDialog3() :
-        title.contains("EM") ? _showEmMenu() :
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-            Directionality(textDirection: TextDirection.rtl, child: w)));
+        title == "محصولات"
+            ? _showDialog3()
+            : title.contains("EM")
+                ? _showEmMenu()
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Directionality(
+                            textDirection: TextDirection.rtl, child: w)));
       },
     );
   }
 
-
   Widget itemInfo1() {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
-    return SizedBox(child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          itmMain(getParvandeAll, "پذیرنده", Icons.person_pin),
-          itmMain(getEslahAll, "نیاز به اصلاح", Icons.drive_file_rename_outline),
-          itmMain(getTakhsisAll, "آماده تخصیص", Icons.mobile_screen_share),
-
-        ],
-      ),
-    width: size.width * .92);
+    return SizedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            itmMain(getParvandeAll, "پذیرنده", Icons.person_pin),
+            itmMain(
+                getEslahAll, "نیاز به اصلاح", Icons.drive_file_rename_outline),
+            itmMain(getTakhsisAll, "آماده تخصیص", Icons.mobile_screen_share),
+          ],
+        ),
+        width: size.width * .92);
   }
 
   Widget itmMain(Function f, String title, IconData ic) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
     double fontSize3 = blockSize * 3;
     double fontSize8 = blockSize * 9;
@@ -1167,50 +1284,62 @@ class dashboardState extends State<dashboard>
             ],
           ),
         ),
-        child:
-        Stack(
+        child: Stack(
           children: [
-            Positioned(top: 0,
+            Positioned(
+              top: 0,
               right: 13,
               left: 0,
-              bottom: 0,child: Text(title, textAlign: TextAlign.right,
-          style: TextStyle(fontSize: fontSize3, color: Colors.black),) ,),
-            Positioned(top: 0,
+              bottom: 0,
+              child: Text(
+                title,
+                textAlign: TextAlign.right,
+                style: TextStyle(fontSize: fontSize3, color: Colors.black),
+              ),
+            ),
+            Positioned(
+              top: 0,
               right: 0,
               left: 0,
-              bottom: 0,child: Align(alignment: Alignment.center,child: FutureBuilder<String>(
-              future: f(),
-              builder: (context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    (int.parse(snapshot.data.toString())).toString(),
-                    style: TextStyle(
-                        fontSize: fontSize6, color: Colors.black),
-                  );
-                } else if (snapshot.hasError) {
-                  return Container();
-                } else
-                  return Container();
-              },
-            ),),),
-            Positioned(child: Align(child: Icon(ic, size: fontSize6,),alignment: Alignment.bottomLeft,),
+              bottom: 0,
+              child: Align(
+                alignment: Alignment.center,
+                child: FutureBuilder<String>(
+                  future: f(),
+                  builder: (context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        (int.parse(snapshot.data.toString())).toString(),
+                        style:
+                            TextStyle(fontSize: fontSize6, color: Colors.black),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Container();
+                    } else
+                      return Container();
+                  },
+                ),
+              ),
+            ),
+            Positioned(
+              child: Align(
+                child: Icon(
+                  ic,
+                  size: fontSize6,
+                ),
+                alignment: Alignment.bottomLeft,
+              ),
               top: 0,
               right: 0,
               left: 5,
-              bottom: 5,),
-
-
+              bottom: 5,
+            ),
           ],
-        )
-
-    );
+        ));
   }
 
-
   Widget itm(double w, double h, Function f, String title) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
     double fontSize3 = blockSize * 3;
     double fontSize4 = blockSize * 4;
@@ -1226,11 +1355,11 @@ class dashboardState extends State<dashboard>
                 children: [
                   Text(
                     snapshot.data!,
-                    style: TextStyle(
-                        fontSize: fontSize5, color: Colors.white),
-                  ), Text(title,
-                    style: TextStyle(
-                        fontSize: fontSize3, color: Colors.white),
+                    style: TextStyle(fontSize: fontSize5, color: Colors.white),
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: fontSize3, color: Colors.white),
                   )
                 ],
               );
@@ -1243,9 +1372,7 @@ class dashboardState extends State<dashboard>
   }
 
   Widget headerItem(String title, IconData ic, double Hsize) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     var blockSize = size.width / 100;
     double fontSize3 = blockSize * 3;
     double fontSize4 = blockSize * 4;
@@ -1274,8 +1401,10 @@ class dashboardState extends State<dashboard>
   }
 
   void _getMsg() async {
-    Map response = await OnlineServices.getMessages(
-        {"agentcode": widget._data.last.agentCode,"usercode": widget._data.last.userCode});
+    Map response = await OnlineServices.getMessages({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
     if (response['data'] != "free") {
       _msg.clear();
       _msg.addAll(response['data']);
@@ -1283,9 +1412,8 @@ class dashboardState extends State<dashboard>
         _showMsg(_msg[i].date, _msg[i].message);
     }
     // else
-      // print("free");
+    // print("free");
   }
-
 
   void _getAlarm() async {
     // Future.delayed(Duration(seconds: 3), (){
@@ -1293,17 +1421,22 @@ class dashboardState extends State<dashboard>
     //
     // });
 
-    Map response = await OnlineServices.getAlarm(
-        {"agentcode": widget._data.last.agentCode,"usercode": widget._data.last.userCode});
+    Map response = await OnlineServices.getAlarm({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
 
-      _alarm.clear();
-      _alarm.addAll(response['data']);
-      _alarm.first.alarm == "new" ?
-      Future.delayed(Duration(seconds: 3), (){
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Directionality(textDirection: TextDirection.rtl, child: alarm())));
-
-      })
-          : null;
+    _alarm.clear();
+    _alarm.addAll(response['data']);
+    _alarm.first.alarm == "new"
+        ? Future.delayed(Duration(seconds: 3), () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => Directionality(
+                        textDirection: TextDirection.rtl, child: alarm())));
+          })
+        : null;
 
     // else
     // print("free");
@@ -1321,9 +1454,7 @@ class dashboardState extends State<dashboard>
   }
 
   void _showMsg(String date, String txt) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -1352,9 +1483,11 @@ class dashboardState extends State<dashboard>
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(bottom: 9),
-                    child: ClipRRect(borderRadius: BorderRadius.circular(10.0),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
                         child: CachedNetworkImage(
-                          imageUrl: "http://194.33.125.128:80/Portal/pos/notif-main/notif.jpg",
+                          imageUrl:
+                              "http://194.33.125.128:80/Portal/pos/notif-main/notif.jpg",
                           placeholder: (context, url) =>
                               Image.asset("assets/images/empty.png"),
                           errorWidget: (context, url, error) =>
@@ -1410,7 +1543,6 @@ class dashboardState extends State<dashboard>
     );
   }
 
-
   void _showDialog(String txt) {
     var size = MediaQuery.of(context).size;
     showDialog<void>(
@@ -1448,7 +1580,6 @@ class dashboardState extends State<dashboard>
       },
     );
   }
-
 
   // Widget WALLET() {
   //   return Container(
@@ -1615,8 +1746,10 @@ class dashboardState extends State<dashboard>
       "usercode": widget._data.last.userCode
     });
     //print (await response);
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getInformation() async {
@@ -1625,19 +1758,21 @@ class dashboardState extends State<dashboard>
       "usercode": widget._data.last.userCode
     });
     //print (await response);
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getTarget() async {
     String res = "";
     String res2 = "";
-    String response = await OnlineServices.getTarget(
-        {
-          "agentcode": widget._data.last.agentCode,
-          "usercode": widget._data.last.userCode
-        });
-    res = response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
+    String response = await OnlineServices.getTarget({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
+    res =
+        response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
     target1 = res.split(",")[1];
     target2 = res.split(",")[2];
     setState(() {});
@@ -1646,137 +1781,153 @@ class dashboardState extends State<dashboard>
 
   Future<String> getParvandeAll() async {
     String response = await OnlineServices.getParvandeAll(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
     //  print(response.split("-")[0] + "*" + response.split("-")[1] + "*" + response.split("-")[2] );
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getCountOfPSP() async {
-    String response = await OnlineServices.getCountOfPSP(
-        {
-          "agentcode": widget._data.last.agentCode,
-          "usercode": widget._data.last.userCode
-        });
+    String response = await OnlineServices.getCountOfPSP({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
     //response = "28,39,55,79";
     PASARGAD = double.parse(response.split(",")[0]);
     IRANKISH = double.parse(response.split(",")[1]);
     SADAD = double.parse(response.split(",")[2]);
     BEHPARDAKHT = double.parse(response.split(",")[3]);
     PARDAKHTNOVIN = double.parse(response.split(",")[4]);
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getEslahAll() async {
     String response = await OnlineServices.getParvandeEslah(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getPazirandeLaghvCount() async {
     String response = await OnlineServices.getPazirandeLaghvCount(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getTakhsisAll() async {
-    String response = await OnlineServices.getParvandeTakhsis(
-        {
-          "agentcode": widget._data.last.agentCode,
-          "usercode": widget._data.last.userCode
-        });
+    String response = await OnlineServices.getParvandeTakhsis({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
     //  print(response.split("-")[0] + "*" + response.split("-")[1] + "*" + response.split("-")[2] );
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getEmBazCount() async {
     String res = "";
-    String response = await OnlineServices.getEmBazCount(
-        {
-          "agentcode": widget._data.last.agentCode,
-          "usercode": widget._data.last.userCode
-        });
-    res = response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
- //   res = "81,50,30";
+    String response = await OnlineServices.getEmBazCount({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
+    res =
+        response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
+    //   res = "81,50,30";
     return res;
 
     return res;
-
   }
 
   Future<String> getTakhsisReadyCount() async {
     String response = await OnlineServices.getTakhsisReadyCount(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getTakhsisNasbCount() async {
     String response = await OnlineServices.getTakhsisNasbCount(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getDeviceAllCount() async {
     String response = await OnlineServices.getDeviceAllCount(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
     //  print(response.split("-")[0] + "*" + response.split("-")[1] + "*" + response.split("-")[2] );
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   Future<String> getDeviceFreeCount() async {
-    String response = await OnlineServices.getDeviceFreeCount(
-        {
-          "agentcode": widget._data.last.agentCode,
-          "usercode": widget._data.last.userCode
-        });
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    String response = await OnlineServices.getDeviceFreeCount({
+      "agentcode": widget._data.last.agentCode,
+      "usercode": widget._data.last.userCode
+    });
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
-
 
   Future<String> getDeviceNewCount() async {
     String response = await OnlineServices.getDeviceNewCount(
-      //{"agentcode" : widget._data.last.agentCode } );
+        //{"agentcode" : widget._data.last.agentCode } );
         {
           "agentcode": widget._data.last.agentCode,
           "usercode": widget._data.last.userCode
         });
-    return response.replaceAll("\n", "").replaceAll("\t", "").replaceAll(
-        "\r", "");
+    return response
+        .replaceAll("\n", "")
+        .replaceAll("\t", "")
+        .replaceAll("\r", "");
   }
 
   void _showDialog2(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -1789,19 +1940,21 @@ class dashboardState extends State<dashboard>
               child: ListBody(
                 children: <Widget>[
                   Directionality(
-                      textDirection: TextDirection.rtl, child: Column(
-                    children: [
-                      CachedNetworkImage(
-                        //imageUrl: snapshot.data!.toString().contains("d544") ? "q" :snapshot.data!.toString() ,
-                        imageUrl: "http://194.33.125.128:80/Portal/pos/notif-main/notif.jpg",
-                        placeholder: (context, url) =>
-                            Image.asset("assets/images/person.png"),
-                        errorWidget: (context, url, error) =>
-                            Image.asset("assets/images/person.png"),
-                      ),
-                      Text(msg)
-                    ],
-                  ))
+                      textDirection: TextDirection.rtl,
+                      child: Column(
+                        children: [
+                          CachedNetworkImage(
+                            //imageUrl: snapshot.data!.toString().contains("d544") ? "q" :snapshot.data!.toString() ,
+                            imageUrl:
+                                "http://194.33.125.128:80/Portal/pos/notif-main/notif.jpg",
+                            placeholder: (context, url) =>
+                                Image.asset("assets/images/person.png"),
+                            errorWidget: (context, url, error) =>
+                                Image.asset("assets/images/person.png"),
+                          ),
+                          Text(msg)
+                        ],
+                      ))
                 ],
               ),
             ),
@@ -1826,8 +1979,6 @@ class dashboardState extends State<dashboard>
     );
   }
 
-
-
   void getPersonalMessage() async {
     Map response;
     response = await OnlineServices.getPersonalMessagee({
@@ -1837,7 +1988,7 @@ class dashboardState extends State<dashboard>
     if (response["data"] != "free") {
       _message.clear();
       _message.addAll(response['data']);
-   //   print(_message.last.message);
+      //   print(_message.last.message);
       msg = _message.last.message;
       _showDialog2(context);
       setState(() {});
@@ -1847,33 +1998,36 @@ class dashboardState extends State<dashboard>
   }
 
   Widget itmColor(String title, Color color) {
-    String logo =
-    title == "پاسارگاد" ? "pasargad"
-        : title == "ایران کیش" ? "irankish"
-        : title == "سداد" ? "sadad"
-        : title == "به پرداخت" ? "behpardakht"
-        : title == "سپهر" ? "sepehr"
-        : title == "پرداخت نوین" ? "novin"
-        : ""
-    ;
+    String logo = title == "پاسارگاد"
+        ? "pasargad"
+        : title == "ایران کیش"
+            ? "irankish"
+            : title == "سداد"
+                ? "sadad"
+                : title == "به پرداخت"
+                    ? "behpardakht"
+                    : title == "سپهر"
+                        ? "sepehr"
+                        : title == "پرداخت نوین"
+                            ? "novin"
+                            : "";
     return Row(
       children: [
         Container(
           height: 8,
           width: 8,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color
-          ),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: color),
         ),
-
         Container(
           margin: EdgeInsets.only(left: 5),
           height: 30,
           width: 30,
           child: Image.asset("assets/images/${logo}.png"),
         ),
-        Text(title,style: TextStyle(fontSize: 11),),
+        Text(
+          title,
+          style: TextStyle(fontSize: 11),
+        ),
       ],
     );
   }
@@ -1897,5 +2051,4 @@ class dashboardState extends State<dashboard>
       },
     );
   }
-
 }
